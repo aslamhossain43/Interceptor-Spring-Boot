@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,6 +32,17 @@ public class MyController {
 		System.out.println("=====================Enter getProductInfo()====================");
 		List<ProductInfo> result = (List<ProductInfo>) repository.findAll();
 		return ResponseEntity.ok(result);
+	}
+	@RequestMapping(value = "/get/{id}")
+	public ResponseEntity<ProductInfo> getProductInfoById(@PathVariable String id) {
+		System.out.println("=====================Enter getProductInfoById()====================");
+		return ResponseEntity.ok(repository.findById(id).get());
+	}
+	@RequestMapping(value = "/delete/{id}")
+	public ResponseEntity<String> deleteProductInfoById(@PathVariable String id) {
+		System.out.println("=====================Enter deleteProductInfoById()====================");
+		repository.deleteById(id);
+		return ResponseEntity.ok("Deleted id: "+id);
 	}
 
 	@RequestMapping(value = "/add")
